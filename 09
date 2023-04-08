@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_NAME_LENGTH 50
+
+union student {
+  char name[MAX_NAME_LENGTH];
+  float gpa;
+};
+
+int main() {
+  union student s;
+  
+  printf("Enter the student's name (up to %d characters): ", MAX_NAME_LENGTH);
+  fgets(s.name, MAX_NAME_LENGTH, stdin);
+  
+  printf("Enter the student's GPA: ");
+  scanf("%f", &s.gpa);
+  
+  printf("Student's name: %s", s.name);
+  printf("Student's GPA: %.2f", s.gpa);
+  
+  return 0;
+}
+
+ output:
+ Enter the student's name (up to 50 characters): John Smith
+Enter the student's GPA: 3.8
+Student's name: John Smith
+Student's GPA: 3.80
+
+ 
