@@ -1,0 +1,141 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_TITLE_LEN 50
+#define MAX_AUTHOR_LEN 50
+#define MAX_BOOKS 100
+
+struct book {
+    char title[MAX_TITLE_LEN];
+    char author[MAX_AUTHOR_LEN];
+    int year;
+};
+
+struct library {
+    struct book books[MAX_BOOKS];
+    int count;
+};
+
+void add_book(struct library *lib) {
+    if (lib->count >= MAX_BOOKS) {
+        printf("Library is full.\n");
+        return;
+    }
+
+    struct book new_book;
+    printf("Enter book details:\n");
+    printf("Title: ");
+    scanf("%s", new_book.title);
+    printf("Author: ");
+    scanf("%s", new_book.author);
+    printf("Year: ");
+    scanf("%d", &new_book.year);
+
+    lib->books[lib->count] = new_book;
+    lib->count++;
+    printf("Book added successfully.\n");
+}
+
+void display_books(struct library *lib) {
+    if (lib->count == 0) {
+        printf("Library is empty.\n");
+        return;
+    }
+
+    printf("Books in library:\n");
+    for (int i = 0; i < lib->count; i++) {
+        printf("%s by %s (%d)\n", lib->books[i].title, lib->books[i].author, lib->books[i].year);
+    }
+}
+
+void list_books_by_author(struct library *lib) {
+    char author[MAX_AUTHOR_LEN];
+    printf("Enter author name: ");
+    scanf("%s", author);
+
+    int count = 0;
+    printf("Books by %s:\n", author);
+    for (int i = 0; i < lib->count; i++) {
+        if (strcmp(lib->books[i].author, author) == 0) {
+            printf("%s (%d)\n", lib->books[i].title, lib->books[i].year);
+            count++;
+        }
+    }
+
+    if (count == 0) {
+        printf("No books found by %s.\n", author);
+    } else {
+        printf("Total books found: %d\n", count);
+    }
+}
+
+void count_books(struct library *lib) {
+    printf("Total books in library: %d\n", lib->count);
+}
+
+int main() {
+    struct library lib = {0};
+
+    int choice;
+    do {
+        printf("\nMenu:\n");
+        printf("1. Add book details\n");
+        printf("2. Display book details\n");
+        printf("3. List all books of given author\n");
+        printf("4. List the count of books in the library\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                add_book(&lib);
+                break;
+            case 2:
+                display_books(&lib);
+                break;
+            case 3:
+                list_books_by_author(&lib);
+                break;
+            case 4:
+                count_books(&lib);
+                break;
+            case 5:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+ output:
+ Menu:
+1. Add book details
+2. Display book details
+3. List all books of given author
+4. List the count of books in the library
+5. Exit
+Enter your choice: 1
+Enter book details:
+Title: The Catcher in the Rye
+Author: J.D. Salinger
+Year: 1951
+Book added successfully.
+
+Menu:
+1. Add book details
+2. Display book details
+3. List all books of given author
+4. List the count of books in the library
+5. Exit
+Enter your choice: 1
+Enter book details:
+Title: To Kill a Mockingbird
+Author: Harper Lee
+Year: 1960
+Book added successfully.
+
