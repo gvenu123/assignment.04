@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#define MAX_NAME_LEN 50
+
+struct student {
+    char name[MAX_NAME_LEN];
+    int roll_number;
+    struct tm birthday;
+    struct tm admission_date;
+};
+
+int main() {
+    struct student s;
+    printf("Enter name: ");
+    fgets(s.name, MAX_NAME_LEN, stdin);
+    printf("Enter roll number: ");
+    scanf("%d", &s.roll_number);
+    printf("Enter birthday (yyyy-mm-dd): ");
+    scanf("%d-%d-%d", &s.birthday.tm_year, &s.birthday.tm_mon, &s.birthday.tm_mday);
+    s.birthday.tm_year -= 1900;
+    s.birthday.tm_mon -= 1;
+    printf("Enter admission date (yyyy-mm-dd): ");
+    scanf("%d-%d-%d", &s.admission_date.tm_year, &s.admission_date.tm_mon, &s.admission_date.tm_mday);
+    s.admission_date.tm_year -= 1900;
+    s.admission_date.tm_mon -= 1;
+
+    // calculate age at time of admission
+    time_t t_birthday = mktime(&s.birthday);
+    time_t t_admission = mktime(&s.admission_date);
+    double diff_seconds = difftime(t_admission, t_birthday);
+    int years = (int)(diff_seconds / (60 * 60 * 24 * 365.25));
+    printf("Age at admission: %d years\n", years);
+
+    return 0;
+}
+output:
+Enter name: John Doe
+Enter roll number: 1234
+Enter birthday (yyyy-mm-dd): 2000-05-12
+Enter admission date (yyyy-mm-dd): 2021-09-01
+Age at admission: 21 years
+
